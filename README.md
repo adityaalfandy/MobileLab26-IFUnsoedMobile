@@ -9,6 +9,6 @@ Shift Awal & Baru   : I / H
 
 ## Display  Pertemuan 2
 <p>
-  <img src="images/gambar2(1).jpeg" width="45%" />
-  <img src="images/gambar2(2).jpeg" width="45%" />
+  <img src="images/gambar2(1).png" width="45%" />
+  <img src="images/gambar2(2).png" width="45%" />
 </p>
