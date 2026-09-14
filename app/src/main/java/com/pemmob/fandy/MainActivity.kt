@@ -30,6 +30,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pemmob.fandy.ui.theme.JualanTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.pemmob.fandy.ui.screen.BasicInfoScreen
+import com.pemmob.fandy.ui.screen.HubungiKamiScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,82 +44,23 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             JualanTheme {
-                // Lambda digunakan di dalam Scaffold untuk mendefinisikan UI
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LayoutTentangJualan(modifier = Modifier.padding(innerPadding))
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = "basic_info") {
+                        composable(route = "basic_info") {
+                            BasicInfoScreen(
+                                onNavigateToContact = { navController.navigate(route = "form_screen") }
+                            )
+                        }
+                        composable(route = "form_screen") {
+                            HubungiKamiScreen(navController = navController)
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Composable
-fun LayoutTentangJualan(modifier: Modifier = Modifier){
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Box(
-            modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape)
-                .background(Color.Gray),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("Jualan", color = Color.White, fontWeight = FontWeight.Bold)
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text(
-            text = "Tentang Jualan",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = "Aplikasi Jualan adalah platform yang mewadahi produk lokal UMKM di wilayah Kabupaten Purbalingga, Jawa Tengah",
-            fontSize = 16.sp,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFFE0E0E0))
-                .padding(all = 16.dp)
-        ){
-            Text(
-                text = "Misi Kami:",
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.weight(2f)
-            )
-            Text(
-                text = "Memajukan UMKM",
-                modifier = Modifier.weight(2f)
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    JualanTheme {
-        Greeting("Android")
     }
 }
